@@ -1,0 +1,10 @@
+{
+  "/synonyms": {
+    "target": "https://api.datamuse.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/synonyms": ""
+    }
+  }
+}
