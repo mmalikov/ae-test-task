@@ -2,8 +2,10 @@
 
 ## Run app
 
-1. npm i
-2. ng serve
+1. git clone https://github.com/mmalikov/ae-test-task.git
+2. cd ae-test-task
+3. npm i
+4. ng serve
 
 ## Development server
 
