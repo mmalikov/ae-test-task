@@ -2,6 +2,15 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TextService {
+  private selection: Selection;
+
+  constructor() {
+  }
+
+  getSelection() {
+    return this.selection = window.getSelection();
+  }
+
   getMockText() {
     return new Promise<string>(function (resolve) {
       resolve('A year ago I was in the audience at a gathering of designers in San Francisco. ' +
