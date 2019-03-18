@@ -1,0 +1,2 @@
+<app-icon-button [icon]="icon" (clicked)="loadOptions.emit($event)"></app-icon-button>
+<app-dropdown *ngIf="options.length > 0" options="options" (selected)="selectOption.emit($event)"></app-dropdown>
