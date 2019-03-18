@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TextService } from '../text-service/text.service';
+import { TextService } from '../shared/services/text-service/text.service';
 
 @Component({
   selector: 'app-file',

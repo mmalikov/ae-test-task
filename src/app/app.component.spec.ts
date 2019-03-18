@@ -4,7 +4,7 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
 import { HeaderComponent } from './header/header.component';
 import { FileComponent } from './file/file.component';
 import { FooterComponent } from './footer/footer.component';
-import { TextService } from './text-service/text.service';
+import { TextService } from './services/text-service/text.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
