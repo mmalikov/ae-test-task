@@ -24,6 +24,7 @@ import { TextService } from './shared/services/text-service/text.service';
 import { SynonymsService } from './shared/services/synonyms/synonyms.service';
 import { RenderFormatComponentsService } from './format/services/render-format-components.service';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { ApplyColorStyleFormatComponent } from './format/components/apply-color-style-format/apply-color-style-format.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     IconDropdownButtonComponent,
     ApplyStyleFormatButtonComponent,
     ApplyReplaceFormatDropdownButtonComponent,
+    ApplyColorStyleFormatComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
   entryComponents: [
     ApplyStyleFormatButtonComponent,
     ApplyReplaceFormatDropdownButtonComponent,
+    ApplyColorStyleFormatComponent,
   ],
   providers: [
     TextService,

@@ -1,0 +1,15 @@
+<app-icon-button
+  [class.active]="isApplied$ | async"
+  [icon]="settings.icon"
+  (clicked)="colorPicker.click()">
+  <input #colorPicker
+         [(colorPicker)]="color"
+         button-content
+         hidden
+         [cpPosition]="right"
+         [cpPositionRelativeToArrow]="true"
+         [cpOKButton]="true"
+         [cpUseRootViewContainer]="true"
+         (colorPickerSelect)="updateSelectionFormat($event)"/>
+</app-icon-button>
+

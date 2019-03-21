@@ -3,6 +3,7 @@ import { ENABLED_FORMAT_TYPES, FORMAT, IFormatComponent } from './format-types';
 
 import { ApplyStyleFormatButtonComponent } from '../components/apply-style-format-button/apply-style-format-button.component';
 import { ApplyReplaceFormatDropdownButtonComponent } from '../components/apply-replace-format-dropdown-button/apply-replace-format-dropdown-button.component';
+import { ApplyColorStyleFormatComponent } from '../components/apply-color-style-format/apply-color-style-format.component';
 
 
 @Injectable()
@@ -30,10 +31,10 @@ export class RenderFormatComponentsService {
           format
         );
       }
-      case FORMAT.COLOR: // TODO: change to color picker
+      case FORMAT.COLOR:
         return this.createComponent(
           viewContainerRef,
-          this.componentFactoryResolver.resolveComponentFactory(ApplyStyleFormatButtonComponent),
+          this.componentFactoryResolver.resolveComponentFactory(ApplyColorStyleFormatComponent),
           format
         );
       case FORMAT.SYNONYMUS:

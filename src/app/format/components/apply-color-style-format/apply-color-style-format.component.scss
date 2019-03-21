@@ -1,0 +1,11 @@
+:host {
+  position: relative;
+}
+
+:host button {
+  position: relative;
+}
+
+:host > color-picker {
+  position: relative;
+}
