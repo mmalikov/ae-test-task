@@ -13,4 +13,11 @@ export class IconDropdownButtonComponent {
 
   constructor() {
   }
+  load(event) {
+    this.loadOptions.emit(event);
+  }
+
+  select(option: string) {
+    this.selectOption.emit(option);
+  }
 }
