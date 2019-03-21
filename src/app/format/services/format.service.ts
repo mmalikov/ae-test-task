@@ -93,7 +93,7 @@ export class FormatService {
   }
 
   checkStylesStoreReferentialIntegrity(mutation: MutationRecord) {
-    for (const removedNode of mutation.removedNodes) {
+    for (const removedNode of Array.from(mutation.removedNodes)) {
       const node = this.findNodeInMap(removedNode);
       if (node) this.appliedStylesMap.delete(node);
     }
