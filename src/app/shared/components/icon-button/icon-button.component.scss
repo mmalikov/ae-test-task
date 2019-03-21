@@ -1,11 +1,4 @@
-.bold {
-  font-weight: 700;
+:host(.active) button {
+  background: green;
 }
 
-.italic {
-  font-style: italic;
-}
-
-.underline {
-  text-decoration: underline;
-}
