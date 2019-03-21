@@ -1,5 +1,5 @@
 <app-icon-dropdown-button [icon]="settings.icon"
                           [options]="options$ | async"
                           (loadOptions)="loadFormatOptions()"
-                          (selectOptions)="updateSelectionFormat($event)">
+                          (selectOption)="updateSelectionFormat($event)">
 </app-icon-dropdown-button>
