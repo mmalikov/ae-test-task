@@ -9,7 +9,6 @@ export class TextService {
 
   constructor() {
     this.subscribeForSelectionChanges();
-    this.selection$.subscribe(selection => console.log('[ TextService this.selection$ ]', selection));
   }
 
   getSelection() {
