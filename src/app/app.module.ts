@@ -23,6 +23,7 @@ import { IconDropdownButtonComponent } from './shared/components/icon-dropdown-b
 import { TextService } from './shared/services/text-service/text.service';
 import { SynonymsService } from './shared/services/synonyms/synonyms.service';
 import { RenderFormatComponentsService } from './format/services/render-format-components.service';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { RenderFormatComponentsService } from './format/services/render-format-c
     MatToolbarModule,
     MatSnackBarModule,
     MatMenuModule,
+    ColorPickerModule,
   ],
   entryComponents: [
     ApplyStyleFormatButtonComponent,
