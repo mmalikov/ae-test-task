@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule, MatOptionModule, MatSelectModule, MatSnackBarModule } from '@angular/material';
+import { MatIconModule, MatMenuModule, MatSnackBarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { FileComponent } from './file/file.component';
@@ -47,8 +47,7 @@ import { RenderFormatComponentsService } from './format/services/render-format-c
     MatIconModule,
     MatToolbarModule,
     MatSnackBarModule,
-    MatSelectModule,
-    MatOptionModule,
+    MatMenuModule,
   ],
   entryComponents: [
     ApplyStyleFormatButtonComponent,

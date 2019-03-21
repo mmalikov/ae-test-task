@@ -1,5 +1,10 @@
-<mat-select>
-  <mat-option *ngFor="let option of options" [value]="option" (click)="select($event, option)">
-    {{option}}
-  </mat-option>
-</mat-select>
+<button mat-icon-button="" [matMenuTriggerFor]="optionsList" (click)="open($event)">
+  <ng-content></ng-content>
+</button>
+<mat-menu #optionsList="matMenu">
+  <button mat-menu-item
+          *ngFor="let option of options"
+          (click)="select($event, option)">
+    {{ option }}
+  </button>
+</mat-menu>
