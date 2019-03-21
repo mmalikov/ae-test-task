@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FORMAT_SETTINGS } from './format-settings';
-import { FORMAT, HANDLER_TYPES, IFormatSetting } from './format-types';
-import { getSelectionString, replaceSelectionWithText, updateSelectionStyle } from './format-utils';
+import { FORMAT, LOAD_TYPE, IFormatSetting } from './format-types';
+import { documentExecWithParam, getSelectionString } from './format-utils';
 import { TextService } from '../../shared/services/text-service/text.service';
 import { SynonymsService } from '../../shared/services/synonyms/synonyms.service';
 import { map } from 'rxjs/internal/operators';
@@ -11,7 +11,7 @@ export class FormatService {
 
   private settings = FORMAT_SETTINGS;
   private loadOptionsHandlers = {
-    [HANDLER_TYPES.REPLACE]: this.loadReplaceOptions.bind(this)
+    [LOAD_TYPE.SYNONYMS]: this.loadSynonyms.bind(this)
   };
   private appliedStylesMap = new WeakMap();
 
@@ -33,27 +33,20 @@ export class FormatService {
     return this.synonymsService.options$;
   }
 
-  updateSelectionFormat(setting: IFormatSetting, option?: string) {
-    switch (setting.handlerType) {
-      case HANDLER_TYPES.STYLE: {
-        const isApplied = updateSelectionStyle(this.selection, setting.cssClass);
+  updateSelectionFormat(setting: IFormatSetting, commandParam?: string) {
+    if (setting.canStore) {
+      const handler = this.createStoreStyles(documentExecWithParam);
+      return handler(this.selection, setting.commandId, commandParam);
+    } else {
+      return documentExecWithParam(setting.commandId, commandParam);
 
-        if (isApplied) {
-          this.storeAppliedStyles(this.selection, setting.cssClass);
-        }
-
-        return isApplied;
-      }
-      case HANDLER_TYPES.REPLACE: {
-        return replaceSelectionWithText(this.selection, option);
-      }
     }
   }
 
   //#region format options
   loadFormatOptions(format: FORMAT) {
     const settings = this.getSettings(format);
-    const handler = this.loadOptionsHandlers[settings.handlerType];
+    const handler = this.loadOptionsHandlers[settings.loadType];
 
     const selection = this.selection;
 
@@ -68,7 +61,7 @@ export class FormatService {
     this.synonymsService.clear();
   }
 
-  private loadReplaceOptions(selection: Selection, settings?: IFormatSetting) {
+  private loadSynonyms(selection: Selection, settings?: IFormatSetting) {
     const word: string = getSelectionString(selection);
     this.synonymsService.load(word);
   }
@@ -79,14 +72,15 @@ export class FormatService {
   createApplied(settings: IFormatSetting) {
     return this.textService.selection$.pipe(
       map(selection => selection.focusNode),
-      map(focusNode => this.isStyleApplied(focusNode, settings.cssClass))
+      map(focusNode => this.isStyleApplied(focusNode, settings.commandId))
     );
   }
 
-  isStyleApplied(focusNode: Node, cssClass: string): boolean {
+  isStyleApplied(focusNode: Node, style: string): boolean {
     if (this.appliedStylesMap.has(focusNode)) {
       const styles = this.appliedStylesMap.get(focusNode);
-      return styles.includes(cssClass);
+
+      return styles.includes(style);
     }
 
     return false;
@@ -95,8 +89,23 @@ export class FormatService {
   checkStylesStoreReferentialIntegrity(mutation: MutationRecord) {
     for (const removedNode of Array.from(mutation.removedNodes)) {
       const node = this.findNodeInMap(removedNode);
-      if (node) this.appliedStylesMap.delete(node);
+      if (node) {
+        this.appliedStylesMap.delete(node);
+      }
     }
+  }
+
+  private createStoreStyles(cb) {
+    return (...args: any[]) => {
+      const [, ...withoutFirst] = args;
+      const isApplied = cb.apply(this, withoutFirst);
+
+      if (isApplied) {
+        this.storeAppliedStyles.apply(this, args);
+      }
+
+      return isApplied;
+    };
   }
 
   private findNodeInMap(node: Node) {
@@ -109,18 +118,22 @@ export class FormatService {
     }
   }
 
-  private storeAppliedStyles(selection: Selection, cssClass: string): void {
+  private storeAppliedStyles(selection: Selection, commandId: string): void {
     const { focusNode } = selection;
 
     if (this.appliedStylesMap.has(focusNode)) {
       const originAppliedStyles = this.appliedStylesMap.get(focusNode);
-      const appliedStyles = originAppliedStyles.includes(cssClass) ?
-        originAppliedStyles.filter(c => c !== cssClass) :
-        [...originAppliedStyles, cssClass];
+      const appliedStyles = originAppliedStyles.includes(commandId) ?
+        originAppliedStyles.filter(c => c !== commandId) :
+        [...originAppliedStyles, commandId];
 
-      this.appliedStylesMap.set(focusNode, appliedStyles);
+      if (appliedStyles.length) {
+        this.appliedStylesMap.set(focusNode, appliedStyles);
+      } else {
+        this.appliedStylesMap.delete(focusNode);
+      }
     } else {
-      this.appliedStylesMap.set(focusNode, [cssClass]);
+      this.appliedStylesMap.set(focusNode, [commandId]);
     }
   }
 
