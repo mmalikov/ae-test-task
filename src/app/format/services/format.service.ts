@@ -79,11 +79,7 @@ export class FormatService {
   createApplied(settings: IFormatSetting) {
     return this.textService.selection$.pipe(
       map(selection => selection.focusNode),
-      map(focusNode => {
-        console.info('[ FormatService createApplied() ] focusNode', focusNode);
-        console.info('[ FormatService createApplied() ] this.selection', this.selection);
-        return this.isStyleApplied(focusNode, settings.cssClass);
-      })
+      map(focusNode => this.isStyleApplied(focusNode, settings.cssClass))
     );
   }
 
@@ -94,6 +90,23 @@ export class FormatService {
     }
 
     return false;
+  }
+
+  checkStylesStoreReferentialIntegrity(mutation: MutationRecord) {
+    for (const removedNode of mutation.removedNodes) {
+      const node = this.findNodeInMap(removedNode);
+      if (node) this.appliedStylesMap.delete(node);
+    }
+  }
+
+  private findNodeInMap(node: Node) {
+    if (this.appliedStylesMap.has(node)) {
+      return node;
+    } else if (node.childNodes) {
+      Array.from(node.childNodes).forEach(childNode => this.findNodeInMap(childNode));
+    } else {
+      return null;
+    }
   }
 
   private storeAppliedStyles(selection: Selection, cssClass: string): void {
