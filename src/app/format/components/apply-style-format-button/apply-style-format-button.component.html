@@ -1,1 +1,5 @@
-<app-icon-button [icon]="settings.icon" (clicked)="updateSelectionFormat($event)"></app-icon-button>
+<app-icon-button
+  [class.active]="isApplied$ | async"
+  [icon]="settings.icon"
+  (clicked)="updateSelectionFormat($event)">
+</app-icon-button>

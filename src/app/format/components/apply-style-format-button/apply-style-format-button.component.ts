@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit } from '@angular/core';
 import { FormatService } from '../../services/format.service';
 import { FORMAT, IFormatComponent, IFormatSetting } from '../../services/format-types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-apply-style-format-button',
@@ -8,7 +9,7 @@ import { FORMAT, IFormatComponent, IFormatSetting } from '../../services/format-
   styleUrls: ['./apply-style-format-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ApplyStyleFormatButtonComponent implements IFormatComponent {
+export class ApplyStyleFormatButtonComponent implements AfterViewInit, IFormatComponent {
 
   @Input() set format(format: FORMAT) {
     this.settings = this.formatService.getSettings(format);
@@ -16,9 +17,15 @@ export class ApplyStyleFormatButtonComponent implements IFormatComponent {
 
   settings: IFormatSetting;
 
+  isApplied$: Observable<boolean>;
+
   constructor(
     private formatService: FormatService
   ) {
+  }
+
+  ngAfterViewInit() {
+    this.isApplied$ = this.formatService.createApplied(this.settings);
   }
 
   public updateSelectionFormat() {
