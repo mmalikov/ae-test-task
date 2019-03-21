@@ -33,6 +33,7 @@ export class ApplyReplaceFormatDropdownButtonComponent implements OnInit, IForma
   }
 
   public updateSelectionFormat(option?: string) {
+    this.formatService.clearFormatOptions();
     this.formatService.updateSelectionFormat(this.settings, option);
   }
 }

@@ -64,6 +64,10 @@ export class FormatService {
     handler(selection, settings);
   }
 
+  clearFormatOptions() {
+    this.synonymsService.clear();
+  }
+
   private loadReplaceOptions(selection: Selection, settings?: IFormatSetting) {
     const word: string = getSelectionString(selection);
     this.synonymsService.load(word);

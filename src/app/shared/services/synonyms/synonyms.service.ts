@@ -20,11 +20,15 @@ export class SynonymsService {
   ) {
   }
 
-  load(word: string) {
-    return this.http.get(this.buildWordSynonymUrl(word)).pipe(
+  load(word: string): void {
+    this.http.get(this.buildWordSynonymUrl(word)).pipe(
       map((response: [IDatamuseReponse]) => response.map(r => r.word)),
-      map((words: [string]) => this.optionsSubject$.next(words))
-    );
+      map((words: [string]) => this.optionsSubject$.next(words)),
+    ).subscribe();
+  }
+
+  clear() {
+    this.optionsSubject$.next([]);
   }
 
   private buildWordSynonymUrl(word: string) {
