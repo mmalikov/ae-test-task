@@ -25,7 +25,6 @@ export class ApplyColorStyleFormatComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.isApplied$ = this.formatService.createApplied(this.settings);
-    this.isApplied$.subscribe(value => console.log('[ ApplyColorStyleFormatComponent ngAfterViewInit() ] isApplied', value));
   }
 
   public updateSelectionFormat(color: string) {

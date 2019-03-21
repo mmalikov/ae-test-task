@@ -25,7 +25,7 @@ export class FileComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.initMutationObserver();
+    // this.initMutationObserver(); TODO should be uncomment once https://github.com/mmalikov/ae-test-task/issues/6 will be fixed
   }
 
   ngOnDestroy() {
