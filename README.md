@@ -8,9 +8,9 @@
 4. ng serve
 
 ## Basic tools
- - UI: (angular material)[https://material.angular.io/]
- - Color picker: (ngx-color-picker)[https://github.com/zefoy/ngx-color-picker]
- - Synonyms api: (datamuse)[https://www.datamuse.com/api/]
+ - UI: [angular material](https://material.angular.io/)
+ - Color picker: [ngx-color-picker](https://github.com/zefoy/ngx-color-picker)
+ - Synonyms api: [datamuse](https://www.datamuse.com/api/)
 
 
 ## Development server
