@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FORMAT_SETTINGS } from './format-settings';
 import { FORMAT, HANDLER_TYPES, IFormatSetting } from './format-types';
-import { getSelectionString, updateSelectionCss } from './format-utils';
+import { getSelectionString, replaceSelectionWithText, updateSelectionStyle } from './format-utils';
 import { TextService } from '../../shared/services/text-service/text.service';
 import { SynonymsService } from '../../shared/services/synonyms/synonyms.service';
 
@@ -30,10 +30,10 @@ export class FormatService {
   updateSelectionFormat(setting: IFormatSetting, option?: string) {
     switch (setting.handlerType) {
       case HANDLER_TYPES.STYLE: {
-        return updateSelectionCss(this.selection, setting.cssClass);
+        return updateSelectionStyle(this.selection, setting.cssClass);
       }
       case HANDLER_TYPES.REPLACE: {
-        return updateSelectionCss(this.selection, option);
+        return replaceSelectionWithText(this.selection, option);
       }
     }
   }
@@ -46,7 +46,7 @@ export class FormatService {
     const settings = this.getSettings(format);
     const handler = this.loadOptionsHandlers[settings.handlerType];
 
-    return handler(this.selection, settings);
+    handler(this.selection, settings);
   }
 
   private loadReplaceOptions(selection: Selection, settings?: IFormatSetting) {

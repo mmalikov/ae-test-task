@@ -15,31 +15,19 @@ export const createSpan = (options: any) => {
   return span;
 };
 
-export const updateSelectionCss = (selection: Selection, cssClass?: string) => {
-  const range = selection.getRangeAt(0);
-
-  const startContainer = range.startContainer;
-  const startContainerParent = startContainer.parentElement;
-
-  if (isSpanContainerCssClass(startContainerParent, cssClass)) {
-    startContainerParent.classList.remove(cssClass);
-  } else {
-    if (startContainerParent.nodeName === 'DIV') {
-      const formattedText = createSpan({ cssClass });
-      range.surroundContents(formattedText);
-    } else {
-      startContainerParent.classList.add(cssClass);
-    }
-  }
+export const updateSelectionStyle = (selection: Selection, cssClass?: string) => {
+  return document.execCommand(cssClass);
 };
 
 export const replaceSelectionWithText = (selection: Selection, replaceTo: string) => {
-  const range = selection.getRangeAt(0);
-  range.deleteContents();
-  range.insertNode(document.createTextNode(replaceTo));
+  return document.execCommand('insertText', false, replaceTo);
 };
 
 export const getSelectionString = (selection: Selection) => {
+  if (selection.rangeCount === 0) {
+    return '';
+  }
+
   const range = selection.getRangeAt(0);
   return range.toString();
 };

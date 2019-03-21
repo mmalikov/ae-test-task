@@ -1,5 +1,4 @@
 import { CSS_CLASSES, FORMAT, HANDLER_TYPES, ICON, IFormatSetting } from './format-types';
-import { replaceSelectionWithText, updateSelectionCss } from './format-utils';
 
 export const FORMAT_SETTINGS = {
   [FORMAT.BOLD]: {
